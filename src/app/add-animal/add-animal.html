@@ -1,0 +1,59 @@
+<div class="container">
+  <div>
+    <h2>Ajouter un Animal :</h2>
+  </div>
+  <form>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <label>ID Animal</label>
+      <input type="number" [(ngModel)]="newAnimal.idAnimal" name="idAnimal" class="form-control" />
+    </div>
+
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <label>Nom Animal</label>
+      <input type="text" [(ngModel)]="newAnimal.nomAnimal" name="nomAnimal" class="form-control" />
+    </div>
+
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <label>Espèce Animal</label>
+      <input
+        type="text"
+        [(ngModel)]="newAnimal.especeAnimal"
+        name="especeAnimal"
+        class="form-control"
+      />
+    </div>
+
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <label>Date de Naissance</label>
+      <input
+        type="date"
+        [(ngModel)]="newAnimal.dateNaissance"
+        name="dateNaissance"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Le menu déroulant du groupe (catégorie) -->
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <label>Groupe</label>
+      <select
+        class="form-control form-control-lg"
+        id="idGroupe"
+        name="idGroupe"
+        [(ngModel)]="newIdGroupe"
+      >
+        @for (g of groupes; track g.idGroupe) {
+          <option [value]="g.idGroupe">{{ g.nomGroupe }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mt-2">
+      <button type="submit" (click)="addAnimal()" class="btn btn-success">Ajouter</button>
+    </div>
+
+    <div class="mt-2">
+      <h3>{{ message }}</h3>
+    </div>
+  </form>
+</div>

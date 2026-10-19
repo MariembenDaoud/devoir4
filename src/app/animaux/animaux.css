@@ -1,0 +1,40 @@
+.container {
+    max-width: 1200px;
+  }
+  
+  h2 {
+    color: #2c3e50;
+    font-weight: bold;
+  }
+  
+  .form-label {
+    font-weight: 600;
+  }
+  
+  .card {
+    border-radius: 8px;
+  }
+  
+  .card-header {
+    font-weight: bold;
+    background-color: #f2f4f7;
+  }
+  
+  .table {
+    margin-top: 15px;
+    vertical-align: middle;
+  }
+  
+  .table th,
+  .table td {
+    text-align: center;
+  }
+  
+  .actions {
+    min-width: 170px;
+  }
+  
+  .form-control:focus,
+  .form-select:focus {
+    box-shadow: 0 0 5px rgba(13, 110, 253, 0.3);
+  }

@@ -1,0 +1,186 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Gestion des animaux</h2>
+
+  <!-- Recherche et filtre -->
+  <div class="row mb-3">
+    <div class="col-md-6 mb-3">
+      <label for="rechercheNom" class="form-label"> Rechercher par nom </label>
+
+      <input
+        id="rechercheNom"
+        type="text"
+        class="form-control"
+        placeholder="Saisir le nom d'un animal"
+        [(ngModel)]="rechercheNom"
+      />
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <label for="filtreGroupe" class="form-label"> Filtrer par groupe </label>
+
+      <select id="filtreGroupe" class="form-select" [(ngModel)]="groupeSelectionne">
+        <option value="">Tous les groupes</option>
+
+        <option *ngFor="let groupe of groupes" [value]="groupe">
+          {{ groupe }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Bouton Ajouter -->
+  <button type="button" class="btn btn-success mb-3" (click)="ajouterAnimal()">
+    + Ajouter un animal
+  </button>
+
+  <!-- Formulaire -->
+  <div class="card mb-4" *ngIf="afficherFormulaire">
+    <div class="card-header">
+      {{ modeModification ? 'Modifier un animal' : 'Ajouter un animal' }}
+    </div>
+
+    <div class="card-body">
+      <form #formAnimal="ngForm" (ngSubmit)="enregistrerAnimal()">
+        <!-- Nom -->
+        <div class="mb-3">
+          <label for="nomAnimal" class="form-label"> Nom </label>
+
+          <input
+            id="nomAnimal"
+            name="nomAnimal"
+            type="text"
+            class="form-control"
+            [(ngModel)]="animalForm.nomAnimal"
+            required
+          />
+        </div>
+
+        <!-- Espèce -->
+        <div class="mb-3">
+          <label for="espece" class="form-label"> Espèce </label>
+
+          <input
+            id="espece"
+            name="espece"
+            type="text"
+            class="form-control"
+            [(ngModel)]="animalForm.espece"
+            required
+          />
+        </div>
+
+        <!-- Groupe : SELECT -->
+        <div class="mb-3">
+          <label for="groupe" class="form-label"> Groupe </label>
+
+          <select
+            id="groupe"
+            name="groupe"
+            class="form-select"
+            [(ngModel)]="animalForm.groupe"
+            required
+          >
+            <option value="" disabled>-- Sélectionner un groupe --</option>
+
+            <option *ngFor="let groupe of groupes" [value]="groupe">
+              {{ groupe }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Âge -->
+        <div class="mb-3">
+          <label for="age" class="form-label"> Âge </label>
+
+          <input
+            id="age"
+            name="age"
+            type="number"
+            min="0"
+            class="form-control"
+            [(ngModel)]="animalForm.age"
+            required
+          />
+        </div>
+
+        <!-- Date de naissance -->
+        <div class="mb-3">
+          <label for="dateNaissance" class="form-label"> Date de naissance </label>
+
+          <input
+            id="dateNaissance"
+            name="dateNaissance"
+            type="date"
+            class="form-control"
+            [(ngModel)]="animalForm.dateNaissance"
+            required
+          />
+        </div>
+
+        <!-- Boutons du formulaire -->
+        <button type="submit" class="btn btn-primary me-2" [disabled]="formAnimal.invalid">
+          {{ modeModification ? 'Enregistrer les modifications' : 'Ajouter' }}
+        </button>
+
+        <button type="button" class="btn btn-secondary" (click)="fermerFormulaire()">
+          Annuler
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tableau -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Espèce</th>
+          <th>Groupe</th>
+          <th>Âge</th>
+          <th>Date de naissance</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let animal of animauxFiltres">
+          <td>{{ animal.idAnimal }}</td>
+          <td>{{ animal.nomAnimal }}</td>
+          <td>{{ animal.espece }}</td>
+          <td>{{ animal.groupe }}</td>
+          <td>{{ animal.age }}</td>
+
+          <td>
+            {{ animal.dateNaissance | date: 'dd/MM/yyyy' }}
+          </td>
+
+          <td class="actions">
+            <button
+              type="button"
+              class="btn btn-warning btn-sm me-2 mb-1"
+              (click)="modifierAnimal(animal)"
+            >
+              Modifier
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-danger btn-sm mb-1"
+              (click)="supprimerAnimal(animal.idAnimal)"
+            >
+              Supprimer
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="animauxFiltres.length === 0">
+          <td colspan="7" class="text-center">Aucun animal trouvé.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="text-muted">Nombre de résultats : {{ animauxFiltres.length }}</p>
+</div>
